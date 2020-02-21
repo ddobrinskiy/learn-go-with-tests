@@ -7,11 +7,24 @@ func Hello(name, language string) string {
 		name = "World"
 	}
 
-	if language == "Spanish" {
-		return fmt.Sprintf("Hola, %s", name)
-	} else {
-		return fmt.Sprintf("Hello, %s", name)
+	var prefix string
+
+	prefix = greetingPrefix(language)
+
+	return fmt.Sprintf("%s, %s", prefix, name)
+}
+
+func greetingPrefix(language string) (prefix string) {
+	switch language {
+	case "Spanish":
+		prefix = "Hola"
+	case "French":
+		prefix = "Bonjour"
+	default :
+		prefix = "Hello"
 	}
+	return
+
 }
 
 func main() {
