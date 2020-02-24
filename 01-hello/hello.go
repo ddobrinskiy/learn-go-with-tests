@@ -20,7 +20,7 @@ func greetingPrefix(language string) (prefix string) {
 		prefix = "Hola"
 	case "French":
 		prefix = "Bonjour"
-	default :
+	default:
 		prefix = "Hello"
 	}
 	return
