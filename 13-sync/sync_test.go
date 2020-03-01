@@ -24,7 +24,6 @@ func TestCounter(t *testing.T) {
 		assertCounter(t, counter, 3)
 	})
 
-
 	t.Run("it runs safely concurrently", func(t *testing.T) {
 		wantedCount := 1000
 		counter := NewCounter()
