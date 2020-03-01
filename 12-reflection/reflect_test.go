@@ -71,13 +71,12 @@ func TestWalk(t *testing.T) {
 		},
 		{
 			"Arrays",
-			[2]Profile {
+			[2]Profile{
 				{33, "London"},
 				{34, "Reykjavík"},
 			},
 			[]string{"London", "Reykjavík"},
 		},
-
 	}
 
 	for _, test := range cases {
@@ -108,7 +107,7 @@ func TestWalk(t *testing.T) {
 	})
 }
 
-func assertContains(t *testing.T, haystack []string, needle string)  {
+func assertContains(t *testing.T, haystack []string, needle string) {
 	contains := false
 	for _, x := range haystack {
 		if x == needle {
@@ -119,4 +118,3 @@ func assertContains(t *testing.T, haystack []string, needle string)  {
 		t.Errorf("expected %+v to contain %q but it didn't", haystack, needle)
 	}
 }
-
