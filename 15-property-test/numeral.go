@@ -86,4 +86,3 @@ func (w windowedRoman) Symbols() (symbols [][]byte) {
 func isSubtractive(symbol uint8) bool {
 	return symbol == 'I' || symbol == 'X' || symbol == 'C'
 }
-
