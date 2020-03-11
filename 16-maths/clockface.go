@@ -2,7 +2,6 @@ package clockface
 
 import (
 	"math"
-	"testing"
 	"time"
 )
 
@@ -15,57 +14,27 @@ type Point struct {
 // SecondHand is the unit vector of the second hand of an analogue clock at time `t`
 // represented as a Point.
 func SecondHand(t time.Time) Point {
-	return Point{150, 150 - 90}
+	p := SecondHandPoint(t)
+	p = Point{p.X * 90, p.Y * 90}   // scale
+	p = Point{p.X, -p.Y}            // flip
+	p = Point{p.X + 150, p.Y + 150} // translate
+	return p
 }
 
 func secondsInRadians(t time.Time) float64 {
 	return (math.Pi / (30 / float64(t.Second())))
 }
 
-
-func TestSecondsInRadians(t *testing.T) {
-	cases := []struct {
-		time  time.Time
-		angle float64
-	}{
-		{simpleTime(0, 0, 30), math.Pi},
-		{simpleTime(0, 0, 0), 0},
-		{simpleTime(0, 0, 45), (math.Pi / 2) * 3},
-		{simpleTime(0, 0, 7), (math.Pi / 30) * 7},
-	}
-
-	for _, c := range cases {
-		t.Run(testName(c.time), func(t *testing.T) {
-			got := secondsInRadians(c.time)
-			if got != c.angle {
-				t.Fatalf("Wanted %v radians, but got %v", c.angle, got)
-			}
-		})
-	}
-}
-
-func simpleTime(hours, minutes, seconds int) time.Time {
+//SimpleTime comment
+func SimpleTime(hours, minutes, seconds int) time.Time {
 	return time.Date(312, time.October, 28, hours, minutes, seconds, 0, time.UTC)
 }
 
-func testName(t time.Time) string {
-	return t.Format("15:04:05")
-}
+// SecondHandPoint comment
+func SecondHandPoint(t time.Time) Point {
+	angle := secondsInRadians(t)
+	x := math.Sin(angle)
+	y := math.Cos(angle)
 
-func TestSecondHandVector(t *testing.T) {
-	cases := []struct {
-		time  time.Time
-		point Point
-	}{
-		{simpleTime(0, 0, 30), Point{0, -1}},
-	}
-
-	for _, c := range cases {
-		t.Run(testName(c.time), func(t *testing.T) {
-			got := secondHandPoint(c.time)
-			if got != c.point {
-				t.Fatalf("Wanted %v Point, but got %v", c.point, got)
-			}
-		})
-	}
+	return Point{x, y}
 }
